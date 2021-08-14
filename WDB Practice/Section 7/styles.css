@@ -1,0 +1,19 @@
+h2 {
+    color: green;
+    background-color: purple;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-family: monospace;
+    text-align: center;
+    /* boldness, essentially */
+    font-weight: 100; 
+    font-size: 40px;
+    letter-spacing: 20px;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: plum;
+    
+
+}

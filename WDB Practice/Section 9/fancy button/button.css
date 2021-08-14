@@ -1,0 +1,34 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* note units */
+  height: 100vh;
+  background-color: #151b29;
+} 
+
+
+
+button {
+  /* note: not the background-color property! */
+  background: none;
+  border: none ;
+  color: #ffa260;
+  border: 2px solid;
+  /* note: using percentage on padding really jacks shit up; why? */
+  /* padding: 10% 1%; */
+  /* why use ems, again? */
+  padding: 1em 2em;
+  font-size: 1em;
+  transition: all 0.10s; 
+}
+
+button:hover {
+  border-color: #f1ff5c;
+  /* "glowing from within" */
+  color: white;
+  box-shadow: 0 0.5em 0.5em -0.4em #f1ff5c; 
+  transform: translateY(-0.25em);
+  cursor: pointer;
+}

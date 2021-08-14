@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+/* http://meyerweb.com/eric/tools/css/reset/
+v2.0 | 20110126
+License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ******************** */
+
+html {
+    box-sizing: border-box;
+}
+body {
+    background-color: rgb(20, 20, 20);
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; */
+    font-family: Amatic SC;
+}
+
+header {
+    display: flex;
+    width: 100vw;
+    align-items: center;
+}
+
+h2 {
+    display: block;
+    color: white;
+    /* font-family: monospace; */
+    font-family: Amatic SC;
+    font-weight: 600;
+    font-size: 50px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+    font-size: 35px;
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(255, 153, 221);
+    border: 2px solid rgb(255, 153, 221);
+    padding: 10px 25px;
+    background-color: rgb(20, 20, 20);
+    transition: text-decoration-color 200ms;
+    transition: 200ms ease-in-out;
+    transition-timing-function: transform cubic-bezier(.97,-0.51,.49,1.02) 200ms;
+    text-decoration-color: transparent;
+    box-shadow: none;
+    border-radius: 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    color: rgb(255, 91, 219);
+    border: 3.5px solid rgb(255, 91, 219);
+    padding: 10px 25px;
+    box-shadow: 0 10px 5px -5px rgb(255, 153, 221);
+    transform: translateY(-2px);
+}
+
+/* I needed some Googling help with box-shadow, transition-timing-function, 
+text-decoration/text-decoration-color, as well as syntax for some of them. */
+
+/* everything else from memory and logic */
+
+/* https://cubic-bezier.com/#.97,-0.51,.49,1.02
+https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions
+https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline
+https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline/53139326#53139326
+https://www.smashingmagazine.com/2016/08/css-animations-motion-curves/
+*/

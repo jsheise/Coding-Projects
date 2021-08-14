@@ -1,0 +1,14 @@
+.item {
+  width: 5px;
+  height: 100px;
+  background-color: greenyellow;
+  transition: background-color 0.1s;
+  transition: width 3s;
+  transition-timing-function: linear;
+}
+
+.item:hover {
+  width: 800px;
+  background-color: red;
+  
+}

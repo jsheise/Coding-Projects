@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice 210702</title>
+</head>
+
+<body>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <td>Subscription</td>
+                    <!--NOT <td>, <th>!-->
+                    <td>Price</td>
+                    <td>Support</td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Free</td>
+                <td>Free</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>Personal</td>
+                <td>$9.99</td>
+                <td>Weekdays</td>
+            </tr>
+            <tr>
+                <td>Business</td>
+                <td>$49.99</td>
+                <td>24/7</td>
+            </tr>
+        </table>
+    </main>
+
+    <hr>
+
+    <h1>TABLE LAYOUT</h1>
+    <!-- https://stackoverflow.com/questions/5967564/form-inside-a-table -->
+    <!-- https://jkorpela.fi/forms/tables.html -->
+    <!-- 3rd answer -->
+    <!-- https://stackoverflow.com/questions/27137072/how-to-handle-multiple-forms-in-a-single-table-and-have-html-validate -->
+    <form action="https://www.google.com/search" id="google_search-form"></form>
+    <form action="https://www.youtube.com/results" id="youtube_search-form"></form>
+
+    <!-- basically, need form attribute on both button and input -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Input</th>
+                <th>Button</th>
+            </tr>
+        </thead>
+        <!-- Google Row -->
+        <tr>
+            <td><label for="google_search-lbl">Google: </label></td>
+            <td><input form="google_search-form" type="text" name="q" id="google_search-lbl" placeholder="Google"></td>
+            <td><button form="google_search-form">SUBMIT</button></td>
+        </tr>
+        <!-- YouTube Row -->
+        <tr>
+            <td><label for="youtube_search-lbl">YouTube: </label></td>
+            <td><input form="youtube_search-form" type="text" name="q" id="youtube_search-lbl" placeholder="YouTube"></td>
+            <td><button form="youtube_search-form">SUBMIT</button></td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h1>STANDARD LAYOUT</h1>
+    <!-- cannot forget https:// -->
+    <form action="https://www.google.com/search">
+        <label for="google_search">Google: </label>
+        <!-- remember: no closing tag on input elements! -->
+        <input type="text" name="q" id="google_search" placeholder="Google">
+        <button>SUBMIT</button>
+    </form>
+    <!-- cannot forget https:// -->
+    <form action="https://www.youtube.com/results">
+        <label for="youtube_search">YouTube :</label>
+        <!-- remember: no closing tag on input elements! -->
+        <input type="text" name="search_query" id="youtube_search" placeholder="YouTube">
+        <button>SUBMIT</button>
+    </form>
+
+    <hr>
+</body>
+
+</html>

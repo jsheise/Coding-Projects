@@ -1,0 +1,26 @@
+:root {
+    --outer_size: 80px;
+    --inner_size: var(--outer_size)/3;
+  }
+  
+  .outer {
+    background-color: red;
+    width: var(--outer_size);
+    height: var(--outer_size);
+    border-radius: 50%;
+    position: absolute;
+    align-items: center;
+    
+}
+
+.white_circle {
+    background-color: red;
+    width: var(--inner_size);
+    height: var(--inner_size);
+    border: 5px solid white;
+    border-radius: 50%;
+    position: relative;
+    left: 25%; top: 25%;
+}
+
+/* https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div#:~:text=By%20using%20a%20div%20with,only%20works%20with%20positioned%20elements. */

@@ -1,0 +1,23 @@
+object {
+    width: 30%; 
+    margin: calc(10%/6);
+    display: inline-block;
+}
+
+nav {
+    text-transform: uppercase;
+    border-bottom: 2px solid #f1f1f1;
+    width: 30%; 
+    /* margin-left: calc(10%/6); */
+    margin: 0 auto;
+    padding: 0.4em 0;
+    font-family: Bebas Neue;
+    font-size: 3vw;
+    text-align: center;
+    
+}
+
+/* https://stackoverflow.com/questions/22051573/how-to-hide-image-broken-icon-using-only-css-html */
+/* https://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
+
+/* looks like flexbox is simply the best way of dealing with things like the whitespace problem */
