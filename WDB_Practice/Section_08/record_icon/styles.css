@@ -1,22 +1,24 @@
 :root {
-    --outer_size: 80px;
-    --inner_size: var(--outer_size)/3;
-  }
+    --outer_size: 120px;
+    --inner_size: var(--outer_size)/2;
+}
   
-  .outer {
+.outer {
     background-color: red;
     width: var(--outer_size);
     height: var(--outer_size);
     border-radius: 50%;
-    position: absolute;
-    align-items: center;
+    /* position: absolute; */
+    /* align-items: center; */
     
 }
 
 .white_circle {
-    background-color: red;
-    width: var(--inner_size);
-    height: var(--inner_size);
+    background-color: white;
+    /* width: var(--inner_size);
+    height: var(--inner_size); */
+    width: 50px;
+    height: 50px;
     border: 5px solid white;
     border-radius: 50%;
     position: relative;
