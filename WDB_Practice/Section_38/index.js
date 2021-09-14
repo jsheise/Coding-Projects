@@ -28,15 +28,11 @@ app.get('/products', async (req, res) => {
     const { category } = req.query;
     if (category) {
         const productsReturned = await Product.find({ category: category });
-        res.render('products/index', { productsReturned });
-
+        res.render('products/index', { productsReturned, category});
     } else {
-
-    }
-    const productsReturned = await Product.find({});
-    // console.log(productsReturned);
-    // res.send('ALL PRODUCTS');
-    res.render('products/index', { productsReturned });
+        const productsReturned = await Product.find({});
+        res.render('products/index', { productsReturned, category: 'All' });
+    } 
 })
 
 // NEW PRODUCT ********************************************

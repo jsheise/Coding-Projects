@@ -9,7 +9,9 @@
 </head>
 
 <body>
-    <h1>All Products</h1>
+    <h1>
+        <%= category.toUpperCase() %> Products
+    </h1>
     <ul>
         <% for (let product of productsReturned ) { %>
             <li>
@@ -19,6 +21,9 @@
             </li>
             <% } %>
     </ul>
+    <% if (category !=='All') { %>
+        <a href="/products">Back to All Products</a>
+    <% } %>
     <a href="/products/new">Add a new product</a>
 </body>
 
