@@ -2,6 +2,7 @@ const PORT_NUM = 3000;
 const path = require('path');
 const Campground = require('./models/campground');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
 
 /* Database connection setup *****************************/
 const mongoose = require('mongoose');
@@ -28,6 +29,9 @@ db.once("open", () => {
 /* Express setup *****************************************/
 const express = require('express');
 const app = express();
+
+// use ejs-locals for all ejs templates:
+app.engine('ejs', ejsMate);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
