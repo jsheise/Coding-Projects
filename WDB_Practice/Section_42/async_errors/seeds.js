@@ -1,26 +1,26 @@
 const mongoose = require('mongoose');
 const Product = require('./models/product');
 
-mongoose.connect('mongodb://localhost:27017/farmStand2', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/farmStand')
     .then(() => {
-        console.log("MONGO CONNECTION OPEN!!!")
+        console.log("mongo connection open");
     })
     .catch(err => {
-        console.log("OH NO MONGO CONNECTION ERROR!!!!")
-        console.log(err)
-    })
+        console.log("mongo connection error");
+        console.log(err);
+    });
 
 // const p = new Product({
-//     name: 'Ruby Grapefruit',
+//     name: 'Ruby Grapefuit',
 //     price: 1.99,
 //     category: 'fruit'
 // })
 // p.save()
 //     .then(p => {
-//         console.log(p)
+//         console.log(p);
 //     })
 //     .catch(e => {
-//         console.log(e)
+//         console.log(e);
 //     })
 
 const seedProducts = [
@@ -52,9 +52,9 @@ const seedProducts = [
 ]
 
 Product.insertMany(seedProducts)
-    .then(res => {
-        console.log(res)
-    })
-    .catch(e => {
-        console.log(e)
-    })
+.then(res => {
+    console.log(res);
+})
+.catch(e => {
+    console.log(e);
+})
