@@ -3,7 +3,6 @@ const path = require('path');
 const Campground = require('./models/campground');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const Joi = require('joi');
 const {campgroundSchema} = require('./schemas')
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
@@ -52,7 +51,7 @@ const validateCampground = (req, res, next) => {
     if (error) {
         const msg = error.details.map(element => element.message).join(',');
         throw new ExpressError(msg, 400);
-    } else next();
+    } else next(); 
 }
 
 /* MAIN PAGES ********************************************/
@@ -70,9 +69,12 @@ app.get('/campgrounds/create', (req, res) => {
 })
 
 app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
+<<<<<<< HEAD
+=======
     // if (!req.body.campground)
     //     throw new ExpressError('invalid campground data', 400);
 
+>>>>>>> 0b2c9f19fcbb85cf701af4d9e3562542cb1d7eab
     const newCampground = new Campground(req.body.campground);
     await newCampground.save();
     const {id} = newCampground;
