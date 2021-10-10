@@ -8,6 +8,8 @@ const {campgroundSchema} = require('./schemas')
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 
+// this is to test commiting and pushing from my Linux Mint XPS
+
 /* Database connection setup *****************************/
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
@@ -68,7 +70,7 @@ app.get('/campgrounds/create', (req, res) => {
 app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
     // if (!req.body.campground)
     //     throw new ExpressError('invalid campground data', 400);
-    
+
     const newCampground = new Campground(req.body.campground);
     await newCampground.save();
     const {id} = newCampground;
