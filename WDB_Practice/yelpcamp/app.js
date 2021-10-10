@@ -10,6 +10,8 @@ const ExpressError = require('./utils/ExpressError');
 
 // this is to test commiting and pushing from my Linux Mint XPS
 
+// continuing to work and remember how git works lol
+
 /* Database connection setup *****************************/
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
