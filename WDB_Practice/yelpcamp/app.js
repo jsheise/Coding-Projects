@@ -1,10 +1,11 @@
 const PORT_NUM = 3000;
 const path = require('path');
 const Campground = require('./models/campground');
+const Review = require('./models/review');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const Joi = require('joi');
-const {campgroundSchema} = require('./schemas')
+const {campgroundSchema, reviewSchema} = require('./schemas')
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 
@@ -49,6 +50,15 @@ app.use(methodOverride('_method'));
 /* VALIDATION MIDDLEWARE *********************************/
 const validateCampground = (req, res, next) => {
     const {error} = campgroundSchema.validate(req.body);
+    console.log(error);
+    if (error) {
+        const msg = error.details.map(element => element.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else next();
+}
+
+const validateReview = (req, res, next) => {
+    const {error} = reviewSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(element => element.message).join(',');
         throw new ExpressError(msg, 400);
@@ -84,7 +94,7 @@ app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
 app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     // console.log(id);
-    const campground = await Campground.findById(id);
+    const campground = await Campground.findById(id).populate('reviews');
     // console.log(campground);
     res.render(`campgrounds/details`, { campground });
 }))
@@ -107,21 +117,40 @@ app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
 app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndDelete(id);
-    res.redirect('/campgrounds');
+    res.redirect('/campgrounds'); 
+}));
+
+/* REVIEW ROUTES *****************************************/
+app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res) => {
+    const cg = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    cg.reviews.push(review);
+    await cg.save();
+    await review.save();
+    res.redirect(`/campgrounds/${cg._id}`);
+}));
+
+app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+    const {id, reviewId} = req.params;
+    const cg = await Campground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    const review = await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${cg._id}`);
+    // cg.reviews.push(review);
+    // await cg.save();
 }));
 
 /* PATH NOT FOUND ERROR **********************************/
 // using '*' to indicate "all paths other than the ones previously specified"
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
-})
+}); 
 
 /* GENERIC ERROR HANDLER *********************************/
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = 'something went wrong!!!' } = err;
     if(!err.message) err.message = 'something went wrong!!';
     res.status(statusCode).render('error', { err });
-})
+});
 
 app.listen(PORT_NUM, () => {
     console.log(`Serving on port ${PORT_NUM}`);
