@@ -19,13 +19,13 @@
         </li>
         <li>Category: <a href="/products?category=<%= foundProduct.category %>"><%= foundProduct.category %></a>
         </li>
+        <li>Produced by <a href="/farms/<%= foundProduct.farm._id %>"><%= foundProduct.farm.name %></a></li>
     </ul>
     <a href="/products/<%= foundProduct._id %>/edit">EDIT</a>
-    <a href="/products">back to all products</a>
-
-    <form action="/products/<%= foundProduct._id %>?_method=DELETE" method="POST">
+    <form action="/farms/<%= foundProduct._id %>?_method=DELETE" method="POST">
         <button>DELETE</button>
     </form>
+    <a href="/products">back to all products</a>
 </body>
 
 </html>

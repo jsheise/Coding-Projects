@@ -23,8 +23,23 @@
                 </option>
                 <% } %>
         </select>
+        <select name="farmId" id="farm">
+            <% for (let f of allFarms) { %>
+                <option value="<%=f._id%>" <%= foundProduct.farm._id===f._id ? 'selected' : '' %> >
+                    <%= f.name %>
+                </option>
+                <% } %>
+        </select>
         <button>Submit</button>
     </form>
+
+    <% for (let f of allFarms) { %>
+        <p><%= f.name %></p>
+        <p><%= f._id %></p>
+        <br>
+        <% } %>
+    <p><%= foundProduct._id %></p>
+
     <a href="/products/<%= foundProduct._id %>">CANCEL</a>
     <a href="/products">back to all products</a>
 </body>

@@ -18,13 +18,15 @@
                 <a href="/products/<%= product._id %>">
                     <%= product.name %>
                 </a>
+                <!-- <a href="/farms/<%= product.farm %> "></a> -->
             </li>
             <% } %>
     </ul>
     <% if (category !=='All') { %>
         <a href="/products">Back to All Products</a>
     <% } %>
-    <a href="/products/new">Add a new product</a>
+    <!-- can no longer use the below line in the index, since we're not supplying a farm like we do when creating a product from a farm page -->
+    <!-- <a href="/products/new">Add a new product</a> -->
 </body>
 
 </html>
