@@ -9,9 +9,8 @@ const {campgroundSchema, reviewSchema} = require('./schemas')
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 
-// this is to test commiting and pushing from my Linux Mint XPS
+const campgroundsRoutes = require('./routes/campgrounds');
 
-// continuing to work and remember how git works lol
 
 /* Database connection setup *****************************/
 const mongoose = require('mongoose');
@@ -47,6 +46,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+
+
+app.use('/campgrounds', campgroundsRoutes);
+
+
 /* VALIDATION MIDDLEWARE *********************************/
 const validateCampground = (req, res, next) => {
     const {error} = campgroundSchema.validate(req.body);
@@ -65,60 +69,7 @@ const validateReview = (req, res, next) => {
     } else next();
 }
 
-/* MAIN PAGES ********************************************/
-app.get('/', (req, res) => {
-    res.render('home.ejs', {});
-})
-app.get('/campgrounds', catchAsync(async (req, res) => {
-    const campgrounds = await Campground.find({});
-    res.render('campgrounds/index', { campgrounds });
-}))
 
-/* CREATE ************************************************/
-app.get('/campgrounds/create', (req, res) => {
-    res.render('campgrounds/create', {});
-})
-
-app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
-    // if (!req.body.campground)
-    //     throw new ExpressError('invalid campground data', 400);
-
-    const newCampground = new Campground(req.body.campground);
-    await newCampground.save();
-    const {id} = newCampground;
-    // console.log(id);
-    res.redirect(`campgrounds/${id}`);
-}));
-
-/* DETAILS ***********************************************/
-app.get('/campgrounds/:id', catchAsync(async (req, res) => {
-    const { id } = req.params;
-    // console.log(id);
-    const campground = await Campground.findById(id).populate('reviews');
-    // console.log(campground);
-    res.render(`campgrounds/details`, { campground });
-}))
-
-/* EDIT **************************************************/
-app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const campground = await Campground.findById(id);
-    // console.log(campground);
-    res.render('campgrounds/edit', { campground });
-}))
-
-app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground }, { new: true });
-    res.redirect(`/campgrounds/${campground._id}`);
-}))
-
-/* DELETE ************************************************/
-app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const campground = await Campground.findByIdAndDelete(id);
-    res.redirect('/campgrounds'); 
-}));
 
 /* REVIEW ROUTES *****************************************/
 /* CREATE ************************************************/
