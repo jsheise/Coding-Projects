@@ -6,7 +6,7 @@ const ExpressError = require('../utils/ExpressError');
 const Campground = require('../models/campground');
 
 const Joi = require('joi');
-const {campgroundSchema, reviewSchema} = require('../schemas')
+const {campgroundSchema} = require('../schemas')
 
 /* VALIDATION MIDDLEWARE *********************************/
 const validateCampground = (req, res, next) => {
