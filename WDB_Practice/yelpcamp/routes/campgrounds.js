@@ -6,11 +6,13 @@ const ExpressError = require('../utils/ExpressError');
 const Campground = require('../models/campground');
 
 const Joi = require('joi');
-const {campgroundSchema} = require('../schemas')
+const { campgroundSchema } = require('../schemas');
+
+const { isLoggedIn } = require('../middleware');
 
 /* VALIDATION MIDDLEWARE *********************************/
 const validateCampground = (req, res, next) => {
-    const {error} = campgroundSchema.validate(req.body);
+    const { error } = campgroundSchema.validate(req.body);
     console.log(error);
     if (error) {
         const msg = error.details.map(element => element.message).join(',');
@@ -21,18 +23,20 @@ const validateCampground = (req, res, next) => {
 /* MAIN PAGE *********************************************/
 router.get('/', catchAsync(async (req, res) => {
     const campgrounds = await Campground.find({});
+    // console.log('req.currentUser in campgrounds route handler: ', req.currentUser);
+    // console.log('req.user in campgrounds route handler: ', req.user);
     res.render('campgrounds/index', { campgrounds });
 }))
 
 /* CREATE ************************************************/
-router.get('/create', (req, res) => {
+router.get('/create', isLoggedIn, (req, res) => {
     res.render('campgrounds/create', {});
 })
 
-router.post('/', validateCampground, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res) => {
     const newCampground = new Campground(req.body.campground);
     await newCampground.save();
-    const {id} = newCampground;
+    const { id } = newCampground;
     // console.log(id);
     req.flash('success', `Successfully created ${newCampground.title}!`);
     res.redirect(`campgrounds/${id}`);
@@ -75,7 +79,7 @@ router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndDelete(id);
     req.flash('success', `Successfully deleted ${campground.title}!`);
-    res.redirect('/campgrounds'); 
+    res.redirect('/campgrounds');
 }));
 
 module.exports = router;
