@@ -43,9 +43,10 @@ const seedDB = async () => {
         const review2 = new Review({rating: randRating2, body: `campground ${i}, review 2`});
         
         const c = new Campground({
+            author: '617197bb279f695d6d34c99d',
             location: `${cities[randIndex].city}, ${cities[randIndex].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: 'https://picsum.photos/1000/1000',
+            image: 'https://source.unsplash.com/collection/483251', // https://picsum.photos/1000/1000 for backup
             description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus! Laboriosam eligendi dolor tempore obcaecati ex consectetur molestiae. Omnis soluta eveniet quae exercitationem veniam laudantium explicabo expedita. Atque, eum debitis.',
             price: randPrice,
             reviews: []
