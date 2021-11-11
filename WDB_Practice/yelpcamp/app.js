@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const PORT_NUM = 3000;
 const path = require('path');
 const methodOverride = require('method-override');
