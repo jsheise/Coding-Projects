@@ -19,10 +19,10 @@ const upload = multer({ storage })
 /* INDEX PAGE AND CREATE POST ROUTE **********************/
 router.route('/')
     .get(catchAsync(campgrounds.index))
-.post(isLoggedIn,
-    validateCampground,
-    upload.array('image'),
-    catchAsync(campgrounds.create));
+    .post(isLoggedIn,
+        upload.array('image'),
+        validateCampground,
+        catchAsync(campgrounds.create));
 
 /* CREATE ************************************************/
 router.get('/create', isLoggedIn, campgrounds.renderCreateForm)
