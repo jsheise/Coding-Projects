@@ -16,7 +16,9 @@ module.exports.renderCreateForm = (req, res) => {
 module.exports.create = async (req, res) => {
     const newCampground = new Campground(req.body.campground);
     newCampground.author = req.user._id;
+    // console.dir(req.files);
     newCampground.images = req.files.map(f => ({url: f.path, filename: f.filename}));
+    console.dir(newCampground); 
     await newCampground.save();
     const { id } = newCampground;
     // console.log(id);
@@ -58,6 +60,10 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.submitEdit = async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground }, { new: true });
+    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+    console.dir(imgs); 
+    campground.images.push(...imgs);
+    await campground.save(); // wasn't seeing images on CGs in Mongo despite seeing them on Cloudinary
     req.flash('success', `Successfully updated ${campground.title}!`);
     res.redirect(`/campgrounds/${campground._id}`);
 }

@@ -20,7 +20,7 @@ const upload = multer({ storage })
 router.route('/')
     .get(catchAsync(campgrounds.index))
     .post(isLoggedIn,
-        upload.array('image'),
+        upload.array('image'), // same value as 'name' attribute in <input>
         validateCampground,
         catchAsync(campgrounds.create));
 
@@ -32,6 +32,7 @@ router.route('/:id')
     .get(catchAsync(campgrounds.details))
     .put(isLoggedIn,
         isAuthor,
+        upload.array('image'),// same value as 'name' attribute in <input>
         validateCampground,
         catchAsync(campgrounds.submitEdit))
     .delete(isLoggedIn,
