@@ -105,4 +105,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT_NUM, () => {
     console.log(`Serving on port ${PORT_NUM}`);
+    console.log(`available @ http://localhost:${PORT_NUM}/campgrounds`);
 });

@@ -1,7 +1,7 @@
 // const catchAsync = require('../utils/catchAsync');
 const Campground = require('../models/campground');
 // const { isLoggedIn, validateCampground, isAuthor } = require('../middleware');
-
+const { cloudinary } = require('../cloudinary');
 /* INDEX PAGE ********************************************/
 module.exports.index = async (req, res) => {
     const campgrounds = await Campground.find({});
@@ -17,8 +17,8 @@ module.exports.create = async (req, res) => {
     const newCampground = new Campground(req.body.campground);
     newCampground.author = req.user._id;
     // console.dir(req.files);
-    newCampground.images = req.files.map(f => ({url: f.path, filename: f.filename}));
-    console.dir(newCampground); 
+    newCampground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    console.dir(newCampground);
     await newCampground.save();
     const { id } = newCampground;
     // console.log(id);
@@ -59,11 +59,19 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.submitEdit = async (req, res) => {
     const { id } = req.params;
+    // console.log(req.body);
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground }, { new: true });
-    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
-    console.dir(imgs); 
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    // console.dir(imgs);
     campground.images.push(...imgs);
     await campground.save(); // wasn't seeing images on CGs in Mongo despite seeing them on Cloudinary
+
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+    }
     req.flash('success', `Successfully updated ${campground.title}!`);
     res.redirect(`/campgrounds/${campground._id}`);
 }
