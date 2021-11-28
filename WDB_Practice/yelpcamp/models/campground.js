@@ -9,12 +9,26 @@ const ImageSchema = new Schema({
 ImageSchema.virtual('thumb').get(function () {
     return this.url.replace('/upload', '/upload/w_200');
 })
+ImageSchema.virtual('carousel').get(function () {
+    return this.url.replace('/upload', '/upload/h_300,c_scale');
+})
 const CampgroundSchema = new Schema({
     title: String,
     images: [ImageSchema],
     price: Number,
     description: String,
     location: String,
+    geometry: {
+        type: {
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

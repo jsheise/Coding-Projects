@@ -3,6 +3,15 @@ const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 
+require('dotenv').config();
+
+console.log(process.env.MAPBOX_TOKEN);
+
+
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mbxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mbxToken }); // instantiated as "baseClient" in docs
+
 /* Database connection setup *****************************/
 mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
     // how necessary are these options?
@@ -30,10 +39,19 @@ const seedDB = async () => {
     await Campground.deleteMany({});
     for (let i = 0; i < 50; i++) {
         const randIndex = Math.floor(Math.random() * 1000);
-        const randPrice = Math.floor(Math.random() * 30) +10;
+        const randPrice = Math.floor(Math.random() * 30) + 10;
+
+
+        const chosenLoc = `${cities[randIndex].city}, ${cities[randIndex].state}`;
+        const geoData = await geocoder.forwardGeocode({
+            query: chosenLoc,
+            limit:1
+        }).send();
+
         const c = new Campground({
             author: '617197bb279f695d6d34c99d',
-            location: `${cities[randIndex].city}, ${cities[randIndex].state}`,
+            location: chosenLoc,
+            geometry: geoData.body.features[0].geometry,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus! Laboriosam eligendi dolor tempore obcaecati ex consectetur molestiae. Omnis soluta eveniet quae exercitationem veniam laudantium explicabo expedita. Atque, eum debitis.',
             price: randPrice,
@@ -41,11 +59,11 @@ const seedDB = async () => {
                 {
                     url: 'https://res.cloudinary.com/dkrg6xrw3/image/upload/v1636734441/YelpCamp/c5k1ejqjh0y2ywg4yqwp.jpg',
                     filename: 'YelpCamp/c5k1ejqjh0y2ywg4yqwp'
-                  },
-                  {
+                },
+                {
                     url: 'https://res.cloudinary.com/dkrg6xrw3/image/upload/v1636734441/YelpCamp/mzfrjf9vljthm3ebk0gg.jpg',
                     filename: 'YelpCamp/mzfrjf9vljthm3ebk0gg'
-                  }
+                }
             ]
         });
         // console.log(c);
@@ -53,4 +71,4 @@ const seedDB = async () => {
     }
 }
 
-seedDB().then((()=> mongoose.connection.close()));
+seedDB().then((() => mongoose.connection.close()));
