@@ -2,6 +2,7 @@ const Campground=require('../models/campground');
 const mongoose=require('mongoose');
 const cities=require('./cities');
 const { places, descriptors }=require('./seedHelpers');
+const GEN_COUNT=200;
 
 /* Database connection setup *****************************/
 mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
@@ -28,7 +29,7 @@ const sample=(array) => array[Math.floor(Math.random()*array.length)];
 
 const seedDB=async () => {
     await Campground.deleteMany({});
-    for (let i=0; i<50; i++) {
+    for (let i=0; i<GEN_COUNT; i++) {
         const randIndex=Math.floor(Math.random()*1000);
         const randPrice=Math.floor(Math.random()*30)+10;
         const location=`${cities[randIndex].city}, ${cities[randIndex].state}`;
