@@ -1,26 +1,26 @@
-if(process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV!=="production") {
     require('dotenv').config();
-} 
+}
 
-const PORT_NUM = 3000;
-const path = require('path');
-const methodOverride = require('method-override');
-const ejsMate = require('ejs-mate'); // for partials
-const ExpressError = require('./utils/ExpressError');
+const PORT_NUM=3000;
+const path=require('path');
+const methodOverride=require('method-override');
+const ejsMate=require('ejs-mate'); // for partials
+const ExpressError=require('./utils/ExpressError');
 
-const session = require('express-session');
-const flash = require('connect-flash');
+const session=require('express-session');
+const flash=require('connect-flash');
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/user');
+const passport=require('passport');
+const LocalStrategy=require('passport-local');
+const User=require('./models/user');
 
-const campgroundsRoutes = require('./routes/campgrounds');
-const reviewsRoutes = require('./routes/reviews');
-const userRoutes = require('./routes/users');
+const campgroundsRoutes=require('./routes/campgrounds');
+const reviewsRoutes=require('./routes/reviews');
+const userRoutes=require('./routes/users');
 
 /* Database connection setup *****************************/
-const mongoose = require('mongoose');
+const mongoose=require('mongoose');
 mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
     // how necessary are these options?
     useNewUrlParser: true,
@@ -35,15 +35,15 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
         console.log(err);
     });
 
-const db = mongoose.connection;
+const db=mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 })
 
 /* Express setup *****************************************/
-const express = require('express');
-const app = express();
+const express=require('express');
+const app=express();
 
 // use ejs-locals for all ejs templates:
 app.engine('ejs', ejsMate); // for partials
@@ -54,12 +54,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const sessionConfig = {
+const sessionConfig={
     secret: 'badsecret',
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires: Date.now() + 1000*60*60*24*7,
+        expires: Date.now()+1000*60*60*24*7,
         maxAge: 1000*60*60*24*7,
         HttpOnly: true
     }
@@ -72,9 +72,9 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
+    res.locals.currentUser=req.user;
+    res.locals.success=req.flash('success');
+    res.locals.error=req.flash('error');
     next();
 })
 
@@ -87,7 +87,7 @@ app.use('/', userRoutes);
 
 /* HOME **************************************************/
 app.get('/', (req, res) => {
-    res.render('home.ejs', {});
+    res.render('home', {});
 })
 
 /* PATH NOT FOUND ERROR **********************************/
@@ -98,8 +98,8 @@ app.all('*', (req, res, next) => {
 
 /* GENERIC ERROR HANDLER *********************************/
 app.use((err, req, res, next) => {
-    const { statusCode = 500, message = 'something went wrong!!!' } = err;
-    if (!err.message) err.message = 'something went wrong!!';
+    const { statusCode=500, message='something went wrong!!!' }=err;
+    if (!err.message) err.message='something went wrong!!';
     res.status(statusCode).render('error', { err });
 });
 

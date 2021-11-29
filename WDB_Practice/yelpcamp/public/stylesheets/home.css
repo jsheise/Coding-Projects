@@ -1,0 +1,10 @@
+.body {
+    max-height: 100vh;
+}
+.container-fluid {
+    max-width: 60vw;
+}
+
+.welcome-text {
+    max-width: 60vw;
+}
