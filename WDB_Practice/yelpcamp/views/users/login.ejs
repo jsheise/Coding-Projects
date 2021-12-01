@@ -1,21 +1,32 @@
 <% layout('layouts/boilerplate') %>
 
-<h1>Log In To YelpCamp</h1>
-
-<form class="needs-validation" novalidate action="/login" method="POST">
-    <div class="mb-3">
-        <label class="form-label" for="uNameInput">Username: </label>
-        <input class="form-control" type="text" id="uNameInput" name="username" required>
-        <div class="invalid-feedback">
-            Please provide a valid username.
+<div class="container justify-content-center align-items-center mt-5">
+    <div class="row justify-content-center">
+        <div class="">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Login</h5>
+                    <form class="needs-validation" novalidate action="/login" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="uNameInput">Username: </label>
+                            <input class="form-control" type="text" id="uNameInput" name="username" autofocus required>
+                            <div class="invalid-feedback">
+                                Please provide a valid username.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="uPassInput">Password: </label>
+                            <input class="form-control" type="password" id="uPassInput" name="password" required>
+                            <div class="invalid-feedback">
+                                Please provide a password.
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-success btn-block">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="mb-3">
-        <label class="form-label" for="uPassInput">Password: </label>
-        <input class="form-control" type="password" id="uPassInput" name="password" required>
-        <div class="invalid-feedback">
-            Please provide a password.
-        </div>
-    </div>
-    <button class="btn btn-success">Login</button>
-</form>
+</div>

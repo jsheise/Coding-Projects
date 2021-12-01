@@ -1,28 +1,39 @@
 <% layout('layouts/boilerplate') %>
 
-<h1>Register New User</h1>
-
-<form class="needs-validation" novalidate action="/register" method="POST">
-    <div class="mb-3">
-        <label class="form-label" for="uMailInput">Email: </label>
-        <input class="form-control" type="email" id="uMailInput" name="email" required>
-        <div class="invalid-feedback">
-            Please provide a valid email.
+<div class="container justify-content-center align-items-center mt-5">
+    <div class="row justify-content-center">
+        <div class="">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Register New User</h5>
+                    <form class="needs-validation" novalidate action="/register" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="uMailInput">Email: </label>
+                            <input class="form-control" type="email" id="uMailInput" name="email" autofocus required>
+                            <div class="invalid-feedback">
+                                Please provide a valid email.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="uNameInput">Username: </label>
+                            <input class="form-control" type="text" id="uNameInput" name="username" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid username.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="uPassInput">Password: </label>
+                            <input class="form-control" type="password" id="uPassInput" name="password" required>
+                            <div class="invalid-feedback">
+                                Please provide a password.
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-success">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="mb-3">
-        <label class="form-label" for="uNameInput">Username: </label>
-        <input class="form-control" type="text" id="uNameInput" name="username" required>
-        <div class="invalid-feedback">
-            Please provide a valid username.
-        </div>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="uPassInput">Password: </label>
-        <input class="form-control" type="password" id="uPassInput" name="password" required>
-        <div class="invalid-feedback">
-            Please provide a password.
-        </div>
-    </div>
-    <button class="btn btn-success">Register</button>
-</form>
+</div>

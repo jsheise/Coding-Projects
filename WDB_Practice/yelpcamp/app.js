@@ -2,6 +2,10 @@ if (process.env.NODE_ENV!=="production") {
     require('dotenv').config();
 }
 
+const dbUrl=process.env.DB_URL||'mongodb://localhost:27017/yelp-camp-db';
+// const dbUrl=process.env.DB_URL;
+const secret=process.env.SECRET||'badsecret';
+
 const PORT_NUM=3000;
 const path=require('path');
 const methodOverride=require('method-override');
@@ -10,6 +14,8 @@ const ExpressError=require('./utils/ExpressError');
 
 const session=require('express-session');
 const flash=require('connect-flash');
+const MongoStore=require('connect-mongo');
+
 
 const passport=require('passport');
 const LocalStrategy=require('passport-local');
@@ -21,7 +27,7 @@ const userRoutes=require('./routes/users');
 
 /* Database connection setup *****************************/
 const mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost:27017/yelp-camp-db', {
+mongoose.connect(dbUrl, {
     // how necessary are these options?
     useNewUrlParser: true,
     // useCreateIndex: true,
@@ -54,8 +60,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const store=MongoStore.create({
+    mongoUrl: dbUrl,
+    secret,
+    touchAfter: 24*60*60
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e);
+})
+
 const sessionConfig={
-    secret: 'badsecret',
+    store, // passing in mongo store directly
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
